@@ -16,13 +16,18 @@ import java.awt.*;
 
 public class UNITHESnakeGUI extends JFrame {
     {
-        super("Snake Game");
-        int x = starter.getx();
-        int y = starter.gety();
-        GridLayout gridLayout = new GridLayout(x,y);
-        JPanel panel = new JPanel(gridLayout);
+     add(new Board()) ;
+     setResizable(false);
+     pack();
+     setTitle(UNITHESnake);
+     setLocationRelativeTo(null);
+     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+}
+    
+public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            JFrame ex = new UNITHESnake();
+            ex.setVisible(true);
+        });
     }
-    this.add(panel)
-   this.SetSize(300,400)
-   this.setVisible(true)
 }
