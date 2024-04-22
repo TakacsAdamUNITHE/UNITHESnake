@@ -7,24 +7,20 @@
  *
  * @author Göblyös Bence, Takács Ádám
  */
+package UNITHESnake;
+//import java.util.Random;
+import javax.swing.*;
+
+
 public class UNITHESnake {
-    //a palya adatainak szamontartasahoz szukseges dolgok
-    //ertek magyarazat:
-    //false: a mezo ures
-    //true: bogyo
-    //a snakecord tomb a kigyo helyzetenek a szamontartasara szolgal
-    //a mozgas szimulalasa erdekeben a tomb elso elemet elvesszuk es a vegera egy ujat rakunkbe
-    //boolean [] [] snakemap;
-    
     //a korabbi valtoztatasok miat szerintem nem igazan lesz szukseg maga a palya szamon tartasara
     //ezert csak a pont x es y kordinatajat fogom szamon tartani
     //a pont szerzets meg ugy lehetlesz megoldani hogy elenorizuk hogy a pont valtozoban levo elemek
     //benne vannak-e a snakecord-ban
-    
     int [] pont;
     int [][] snakecord;
     int x,y,area,v;
-    
+
     //a tomb alap helyzetbe allitasa
     UNITHESnake (int x, int y){
         this.x=x;
@@ -45,10 +41,11 @@ public class UNITHESnake {
         //a kigyo kordonatainak tarolasa
         //area: a palya teruletenek kiszamitasa
         area=x*y;
-        v=1;
-        snakecord = new int [area][v];
-        for (int i=0;i<area;i++){
-            for (int j=0;j<v;j++){
+        snakecord = new int [area][1];
+        snakecord[0][0]=3;
+        snakecord[0][1]=3;
+        for (int i=1;i<area;i++){
+            for (int j=1;j<v;j++){
                snakecord[i][j] = 0;
             }
         }
@@ -62,5 +59,22 @@ public class UNITHESnake {
     public int gety(){
         return this.y;
     }
+   
+    //veletlen szam az uj bogyo megjelenesehez
+    //Random rand = new Random();
+    //int randomX = rand.nextInt(x);
+    //int randomY = rand.nextInt(y);
     
+    
+    public static void main(String[] args){
+        
+        UNITHESnake game = new UNITHESnake(5,5);
+        UNITHESnakeGUI gamegui = new UNITHESnakeGUI(game);
+        gamegui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //boolean gameOver = false;
+        //while (gameOver == false){
+        //    System.out.println("hello world!");
+        //    gameOver=true;
+        //}
+    }    
 }
