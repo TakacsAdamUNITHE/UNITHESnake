@@ -10,6 +10,10 @@
 package UNITHESnake;
 //import java.util.Random;
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 public class UNITHESnake {
@@ -65,7 +69,25 @@ public class UNITHESnake {
     //int randomX = rand.nextInt(x);
     //int randomY = rand.nextInt(y);
     
-    
+ // Adatbázis lekérdezés elkészítése, a getConnection segítségével elérjük az adatbázist, a megadott adatokkal.    
+public class Adatbazislekerdezes {
+    private void queryData() {
+        try {
+            Connection myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/unithesnake", "root", "");
+
+            Statement myStmt = myConnection.createStatement();
+
+            ResultSet myRs = myStmt.executeQuery("select * from jatekosok");
+
+            while (myRs.next()) {
+                System.out.println(myRs.getString("Nev") + ", " + myRs.getString("Helyezes") + ", " + myRs.getString("Pontszam"));
+            }
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+    }
+}
+
     public static void main(String[] args){
         
         UNITHESnake game = new UNITHESnake(5,5);
