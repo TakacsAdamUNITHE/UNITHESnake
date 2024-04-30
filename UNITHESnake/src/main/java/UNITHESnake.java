@@ -24,6 +24,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
     private int bogyoX;
     private int bogyoY; //bogyo kordinatak
     private int hossz = 3; // a kezdo hossz
+    private int pontok = 0;
     
     public UNITHESnake(){
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -58,6 +59,27 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         g.drawString("UNI THE Snake Game",(WIDTH - metrics.stringWidth("Snake Game")) / 2, HEIGHT / 2 - 50);
         startButton.setBounds((WIDTH - 100) / 2, HEIGHT / 2, 100, 40);
     }
+    
+    //maga a jatek
+    public void gameScreen (Graphics g){
+        g.setColor(Color.RED);
+        g.fillOval(bogyoX,bogyoY,EGYSEG,EGYSEG);
+        
+        for (int i = 0;i<hossz;i++){
+            if (i == 0) {
+                g.setColor(Color.green);
+            } else {
+                g.setColor(new Color(45, 180, 0));
+            }
+            g.fillRect(x[i], y[i], EGYSEG, EGYSEG);
+        }
+        g.setColor(Color.red);
+        g.setFont(new Font("Arial", Font.BOLD, 25));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Score: " + pontok, (WIDTH - metrics.stringWidth("Score: " + pontok)) / 2, g.getFont().getSize());
+    }
+    
+    
     
     //a kepernyo valtasi vezerlo
     public void paintComponent(Graphics g) {
