@@ -21,6 +21,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
     private Timer timer; //lepeshez szukseges idozito (javax swing)
     private JButton startButton; //start gomb
     private JButton restartButton; //jatek ujra inditasa
+    private JTextField nevMezo; //az adatbazishoz nev bekero mezo
     private char irany = 'R'; //mozgasi irany
     private int bogyoX;
     private int bogyoY; //bogyo kordinatak
@@ -56,6 +57,19 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
                 startGame();
             }
         });
+        nevMezo = new JTextField(10);
+        nevMezo.setFont(new Font("Arial", Font.PLAIN, 20));
+        nevMezo.setHorizontalAlignment(JTextField.CENTER);
+        nevMezo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // az adatbazishoz ezt majd csereld le
+                String playerName = nevMezo.getText();
+                System.out.println("Player name: " + playerName);
+                nevMezo.setVisible(false);
+            }
+        });
+        add(nevMezo);
+        nevMezo.setVisible(false);
     }
 
     //start-hoz szukseges dolgok elkeszitese
@@ -107,7 +121,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.red);
         g.setFont(new Font("Arial", Font.BOLD, 40));
         FontMetrics metrics1 = getFontMetrics(g.getFont());
-        g.drawString("Game Over", (WIDTH - metrics1.stringWidth("Game Over")) / 2, HEIGHT / 2);
+        g.drawString("Game Over", (WIDTH - metrics1.stringWidth("Game Over")) / 2, (HEIGHT-200) / 2);
         //vegso pontszam kirajzolasa
         g.setColor(Color.red);
         g.setFont(new Font("Arial", Font.BOLD, 25));
@@ -116,6 +130,10 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         add(restartButton);
         restartButton.setBounds((WIDTH - 100) / 2, (HEIGHT+50) / 2, 100, 40);
         restartButton.setVisible(true);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+        g.drawString("Enter Your Name:", (WIDTH - metrics3.stringWidth("Enter Your Name:")) / 2, (HEIGHT-200) / 2 + 50);
+        nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
     }
     
     //a kepernyo valtasi vezerlo
@@ -177,6 +195,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         }
         if (!running){
             timer.stop();
+            nevMezo.setVisible(true);
         }
     }
     
