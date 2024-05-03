@@ -10,6 +10,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+
 public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 400;//a palya meretei
@@ -61,15 +67,33 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         nevMezo.setFont(new Font("Arial", Font.PLAIN, 20));
         nevMezo.setHorizontalAlignment(JTextField.CENTER);
         nevMezo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // az adatbazishoz ezt majd csereld le
-                String playerName = nevMezo.getText();
-                System.out.println("Player name: " + playerName);
-                nevMezo.setVisible(false);
-            }
-        });
-        add(nevMezo);
+    public void actionPerformed(ActionEvent e) {
+        String playerName = nevMezo.getText();
+        System.out.println("Player name: " + playerName);
         nevMezo.setVisible(false);
+
+        // Adatbázis kapcsolat létrehozása
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
+            Statement stmt = conn.createStatement();
+
+            // SQL utasítás előkészítése
+            String sql = "INSERT INTO Users (Username) VALUES ('" + playerName + "');";
+
+            // SQL utasítás végrehajtása
+            stmt.execute(sql);
+
+            // Kapcsolat bezárása
+            stmt.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+});
+add(nevMezo);
+nevMezo.setVisible(false);
+
     }
 
     //start-hoz szukseges dolgok elkeszitese
@@ -117,24 +141,42 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
     
     //game over kepernyo
     public void gameOver(Graphics g){
-        //game over szoveg kirajzolasa
-        g.setColor(Color.red);
-        g.setFont(new Font("Arial", Font.BOLD, 40));
-        FontMetrics metrics1 = getFontMetrics(g.getFont());
-        g.drawString("Game Over", (WIDTH - metrics1.stringWidth("Game Over")) / 2, (HEIGHT-200) / 2);
-        //vegso pontszam kirajzolasa
-        g.setColor(Color.red);
-        g.setFont(new Font("Arial", Font.BOLD, 25));
-        FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("Score: " + pontok, (WIDTH - metrics.stringWidth("Score: " + pontok)) / 2, g.getFont().getSize());
-        add(restartButton);
-        restartButton.setBounds((WIDTH - 100) / 2, (HEIGHT+50) / 2, 100, 40);
-        restartButton.setVisible(true);
-        g.setFont(new Font("Arial", Font.BOLD, 20));
-        FontMetrics metrics3 = getFontMetrics(g.getFont());
-        g.drawString("Enter Your Name:", (WIDTH - metrics3.stringWidth("Enter Your Name:")) / 2, (HEIGHT-200) / 2 + 50);
-        nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
+    //game over szoveg kirajzolasa
+    g.setColor(Color.red);
+    g.setFont(new Font("Arial", Font.BOLD, 40));
+    FontMetrics metrics1 = getFontMetrics(g.getFont());
+    g.drawString("Game Over", (WIDTH - metrics1.stringWidth("Game Over")) / 2, (HEIGHT-200) / 2);
+    //vegso pontszam kirajzolasa
+    g.setColor(Color.red);
+    g.setFont(new Font("Arial", Font.BOLD, 25));
+    FontMetrics metrics = getFontMetrics(g.getFont());
+    g.drawString("Score: " + pontok, (WIDTH - metrics.stringWidth("Score: " + pontok)) / 2, g.getFont().getSize());
+    add(restartButton);
+    restartButton.setBounds((WIDTH - 100) / 2, (HEIGHT+50) / 2, 100, 40);
+    restartButton.setVisible(true);
+    g.setFont(new Font("Arial", Font.BOLD, 20));
+    FontMetrics metrics3 = getFontMetrics(g.getFont());
+    g.drawString("Enter Your Name:", (WIDTH - metrics3.stringWidth("Enter Your Name:")) / 2, (HEIGHT-200) / 2 + 50);
+    nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
+
+    // Adatbázis kapcsolat létrehozása
+    try {
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
+        Statement stmt = conn.createStatement();
+
+        // SQL utasítás előkészítése
+        String sql = "UPDATE Users SET Score = Score + " + pontok + " WHERE Username = '" + nevMezo.getText() + "';";
+
+        // SQL utasítás végrehajtása
+        stmt.execute(sql);
+
+        // Kapcsolat bezárása
+        stmt.close();
+        conn.close();
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
     }
+}
     
     //a kepernyo valtasi vezerlo
     public void paintComponent(Graphics g) {
@@ -246,7 +288,26 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
     public void keyTyped(KeyEvent e){
     }
     
-    public static void main(String[] args) {
+   public static void main(String[] args) {
+       try {
+            // Létrehozzuk a kapcsolatot az adatbázissal
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SnakeGame", "root", "");
+
+            // Létrehozzuk az SQL utasítást
+            Statement stmt = conn.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS Users " +
+                         "(Username VARCHAR(255) NOT NULL, " +
+                         " Score INT NOT NULL);";
+
+            // Végrehajtjuk az SQL utasítást
+            stmt.execute(sql);
+
+            // Bezárjuk a kapcsolatot
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         JFrame frame = new JFrame("Snake Game");
         UNITHESnake game = new UNITHESnake();
         frame.add(game);
