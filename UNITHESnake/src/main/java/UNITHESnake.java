@@ -50,19 +50,22 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         add(startButton);
         restartButton = new JButton("Retry");
         restartButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                for (int i=0;i<=0;i++){
-                    x[i]=0;
-                    y[i]=0;
-                }    
-                hossz=3;
-                pontok=0;
-                irany = 'R';
-                running = true;
-                restartButton.setVisible(false);
-                startGame();
-            }
-        });
+        public void actionPerformed(ActionEvent e) {
+        for (int i=0;i<=0;i++){
+            x[i]=0;
+            y[i]=0;
+        }    
+        hossz=3;
+        pontok=0;
+        irany = 'R';
+        running = true;
+        restartButton.setVisible(false);
+
+
+        startGame();
+    }
+});
+
         nevMezo = new JTextField(10);
         nevMezo.setFont(new Font("Arial", Font.PLAIN, 20));
         nevMezo.setHorizontalAlignment(JTextField.CENTER);
@@ -114,6 +117,10 @@ nevMezo.setVisible(false);
         g.drawString("UNITHE Snake",(WIDTH - metrics.stringWidth("UNITHE Snake")) / 2, HEIGHT / 2 - 50);
         //start gomb
         startButton.setBounds((WIDTH - 100) / 2, HEIGHT / 2, 100, 40);
+        SwingUtilities.invokeLater(() -> {
+        UNITHELeaderboard leaderboard = new UNITHELeaderboard();
+        leaderboard.setVisible(false);
+    });
     }
     
     //maga a jatek
@@ -176,6 +183,15 @@ nevMezo.setVisible(false);
     } catch (Exception ex) {
         System.out.println(ex.getMessage());
     }
+    
+   SwingUtilities.invokeLater(() -> {
+    if (UNITHELeaderboard.currentInstance == null) {
+        UNITHELeaderboard leaderboard = new UNITHELeaderboard();
+        leaderboard.setVisible(true);
+        UNITHELeaderboard.currentInstance = leaderboard;
+    }
+});
+
 }
     
     //a kepernyo valtasi vezerlo
