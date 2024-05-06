@@ -9,9 +9,9 @@ import java.sql.*;
 
 public class UNITHELeaderboard extends JFrame {
     public static UNITHELeaderboard currentInstance = null;
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/your_dbname";
-    private static final String USER = "your_username";
-    private static final String PASS = "your_password";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/snakegame";
+    private static final String USER = "root";
+    private static final String PASS = "";
 
     private JTextArea leaderboardArea;
     private Timer refreshTimer;
