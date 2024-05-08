@@ -60,7 +60,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         irany = 'R';
         running = true;
         restartButton.setVisible(false);
-
+        nevMezo.setVisible(false);
 
         startGame();
     }
