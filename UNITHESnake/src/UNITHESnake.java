@@ -61,7 +61,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         running = true;
         restartButton.setVisible(false);
         nevMezo.setVisible(false);
-        pontok = 0;
+        
 
         startGame();
     }
@@ -82,7 +82,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
             Statement stmt = conn.createStatement();
 
             // SQL utasítás előkészítése
-            String sql = "INSERT INTO users (Username) VALUES ('" + playerName + "');";
+           String sql = "INSERT INTO users (Username) VALUES ('" + playerName + "');";
 
             // SQL utasítás végrehajtása
             stmt.execute(sql);
@@ -106,6 +106,7 @@ nevMezo.setVisible(false);
         running = true;
         timer = new Timer(100,this);
         timer.start();
+        pontok=0;
         
     }
     
@@ -118,10 +119,6 @@ nevMezo.setVisible(false);
         g.drawString("UNITHE Snake",(WIDTH - metrics.stringWidth("UNITHE Snake")) / 2, HEIGHT / 2 - 50);
         //start gomb
         startButton.setBounds((WIDTH - 100) / 2, HEIGHT / 2, 100, 40);
-        SwingUtilities.invokeLater(() -> {
-        UNITHELeaderboard leaderboard = new UNITHELeaderboard();
-        leaderboard.setVisible(false);
-    });
     }
     
     //maga a jatek
@@ -166,8 +163,7 @@ nevMezo.setVisible(false);
     FontMetrics metrics3 = getFontMetrics(g.getFont());
     g.drawString("Írd be a nevedet:", (WIDTH - metrics3.stringWidth("Írd be a nevedet:")) / 2, (HEIGHT-200) / 2 + 50);
     nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
-
-    // Adatbázis kapcsolat létrehozása
+    
     try {
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
         Statement stmt = conn.createStatement();
@@ -184,6 +180,7 @@ nevMezo.setVisible(false);
     } catch (Exception ex) {
         System.out.println(ex.getMessage());
     }
+
     
     
    SwingUtilities.invokeLater(() -> {
