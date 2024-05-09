@@ -48,7 +48,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
             }
         });
         add(startButton);
-        restartButton = new JButton("Retry");
+        restartButton = new JButton("Újra");
         restartButton.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent e) {
         for (int i=0;i<=0;i++){
@@ -152,7 +152,7 @@ nevMezo.setVisible(false);
     g.setColor(Color.red);
     g.setFont(new Font("Arial", Font.BOLD, 40));
     FontMetrics metrics1 = getFontMetrics(g.getFont());
-    g.drawString("Game Over", (WIDTH - metrics1.stringWidth("Game Over")) / 2, (HEIGHT-200) / 2);
+    g.drawString("Vége a játéknak!", (WIDTH - metrics1.stringWidth("Vége a játéknak!")) / 2, (HEIGHT-200) / 2);
     //vegso pontszam kirajzolasa
     g.setColor(Color.red);
     g.setFont(new Font("Arial", Font.BOLD, 25));
@@ -163,7 +163,7 @@ nevMezo.setVisible(false);
     restartButton.setVisible(true);
     g.setFont(new Font("Arial", Font.BOLD, 20));
     FontMetrics metrics3 = getFontMetrics(g.getFont());
-    g.drawString("Enter Your Name:", (WIDTH - metrics3.stringWidth("Enter Your Name:")) / 2, (HEIGHT-200) / 2 + 50);
+    g.drawString("Írd be a nevedet:", (WIDTH - metrics3.stringWidth("Írd be a nevedet:")) / 2, (HEIGHT-200) / 2 + 50);
     nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
 
     // Adatbázis kapcsolat létrehozása
