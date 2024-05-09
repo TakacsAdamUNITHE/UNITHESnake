@@ -61,6 +61,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         running = true;
         restartButton.setVisible(false);
         nevMezo.setVisible(false);
+        pontok = 0;
 
         startGame();
     }
@@ -81,7 +82,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
             Statement stmt = conn.createStatement();
 
             // SQL utasítás előkészítése
-            String sql = "INSERT INTO Users (Username) VALUES ('" + playerName + "');";
+            String sql = "INSERT INTO users (Username) VALUES ('" + playerName + "');";
 
             // SQL utasítás végrehajtása
             stmt.execute(sql);
@@ -172,7 +173,7 @@ nevMezo.setVisible(false);
         Statement stmt = conn.createStatement();
 
         // SQL utasítás előkészítése
-        String sql = "UPDATE Users SET Score = Score + " + pontok + " WHERE Username = '" + nevMezo.getText() + "';";
+        String sql = "UPDATE users SET Score = Score + " + pontok + " WHERE Username = '" + nevMezo.getText() + "';";
 
         // SQL utasítás végrehajtása
         stmt.execute(sql);
@@ -183,6 +184,7 @@ nevMezo.setVisible(false);
     } catch (Exception ex) {
         System.out.println(ex.getMessage());
     }
+    
     
    SwingUtilities.invokeLater(() -> {
     if (UNITHELeaderboard.currentInstance == null) {
@@ -311,7 +313,7 @@ nevMezo.setVisible(false);
 
             // Létrehozzuk az SQL utasítást
             Statement stmt = conn.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS Users " +
+            String sql = "CREATE TABLE IF NOT EXISTS users " +
                          "(Username VARCHAR(255) NOT NULL, " +
                          " Score INT NOT NULL);";
 

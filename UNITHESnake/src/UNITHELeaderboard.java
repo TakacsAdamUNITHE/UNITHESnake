@@ -34,7 +34,7 @@ public class UNITHELeaderboard extends JFrame {
 
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM Users ORDER BY Score DESC")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM users ORDER BY Score DESC")) {
             while (rs.next()) {
                 String username = rs.getString("Username");
                 int score = rs.getInt("Score");
