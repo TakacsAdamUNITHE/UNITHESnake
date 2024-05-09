@@ -315,7 +315,7 @@ nevMezo.setVisible(false);
             Statement stmt = conn.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS users " +
                          "(Username VARCHAR(255) NOT NULL, " +
-                         " Score INT NOT NULL);";
+                         " Score INT NOT NULL DEFAULT 0);";
 
             // Végrehajtjuk az SQL utasítást
             stmt.execute(sql);
