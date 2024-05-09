@@ -307,7 +307,7 @@ nevMezo.setVisible(false);
    public static void main(String[] args) {
        try {
             // Létrehozzuk a kapcsolatot az adatbázissal
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/SnakeGame", "root", "");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
 
             // Létrehozzuk az SQL utasítást
             Statement stmt = conn.createStatement();
