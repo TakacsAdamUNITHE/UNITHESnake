@@ -58,6 +58,7 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         hossz=3;
         pontok=0;
         irany = 'R';
+        nevMezo.setText("");
         running = true;
         restartButton.setVisible(false);
         nevMezo.setVisible(false);
