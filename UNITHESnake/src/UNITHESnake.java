@@ -165,22 +165,22 @@ nevMezo.setVisible(false);
     g.drawString("Írd be a nevedet:", (WIDTH - metrics3.stringWidth("Írd be a nevedet:")) / 2, (HEIGHT-200) / 2 + 50);
     nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
     
-    try {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
-        Statement stmt = conn.createStatement();
+    //try {
+    //    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
+    //    Statement stmt = conn.createStatement();
 
         // SQL utasítás előkészítése
-        String sql = "UPDATE users SET Score = Score + " + pontok + " WHERE Username = '" + nevMezo.getText() + "';";
+        //String sql = "UPDATE users SET Score = Score" + pontok + " WHERE Username = '" + nevMezo.getText() + "';";
 
         // SQL utasítás végrehajtása
-        stmt.execute(sql);
+        //stmt.execute(sql);
 
         // Kapcsolat bezárása
-        stmt.close();
-        conn.close();
-    } catch (Exception ex) {
-        System.out.println(ex.getMessage());
-    }
+        //stmt.close();
+        //conn.close();
+    //} catch (Exception ex) {
+    //    System.out.println(ex.getMessage());
+    //}
 
     
     
