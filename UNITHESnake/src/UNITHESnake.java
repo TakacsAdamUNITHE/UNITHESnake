@@ -78,14 +78,15 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         nevMezo.setVisible(false);
 
         // Adatbázis kapcsolat létrehozása
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
+       try {
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
             Statement stmt = conn.createStatement();
 
             // SQL utasítás előkészítése
-           String sql = "INSERT INTO users (Username) VALUES ('" + playerName + "');";
+           String sql = "INSERT INTO users (Username, Score) VALUES ('" + playerName + "', " + pontok + ") ON DUPLICATE KEY UPDATE Score = VALUES(Score);";
 
-            // SQL utasítás végrehajtása
+
+            // SQL utasítás végrehajtásaStatement stmt = conn.createStatement();
             stmt.execute(sql);
 
             // Kapcsolat bezárása
@@ -166,20 +167,20 @@ nevMezo.setVisible(false);
     nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
     
     //try {
-    //    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
-    //    Statement stmt = conn.createStatement();
+       //Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
+       //Statement stmt = conn.createStatement();
 
-        // SQL utasítás előkészítése
-        //String sql = "UPDATE users SET Score = Score" + pontok + " WHERE Username = '" + nevMezo.getText() + "';";
+         //SQL utasítás előkészítése
+        //String sql = "UPDATE users SET Score = " + pontok + " WHERE Username = '" + nevMezo.getText() + "';";
 
-        // SQL utasítás végrehajtása
+         //SQL utasítás végrehajtása
         //stmt.execute(sql);
 
-        // Kapcsolat bezárása
+       // Kapcsolat bezárása
         //stmt.close();
         //conn.close();
-    //} catch (Exception ex) {
-    //    System.out.println(ex.getMessage());
+    //}catch (Exception ex) {
+        //System.out.println(ex.getMessage());
     //}
 
     
