@@ -13,7 +13,6 @@ import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.sql.ResultSet;
 
 
 public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
@@ -50,55 +49,49 @@ public class UNITHESnake extends JPanel implements KeyListener, ActionListener {
         add(startButton);
         restartButton = new JButton("Újra");
         restartButton.addActionListener(new ActionListener(){
-        public void actionPerformed(ActionEvent e) {
-        for (int i=0;i<=0;i++){
-            x[i]=0;
-            y[i]=0;
-        }    
-        hossz=3;
-        pontok=0;
-        irany = 'R';
-        nevMezo.setText("");
-        running = true;
-        restartButton.setVisible(false);
-        nevMezo.setVisible(false);
-        
-
-        startGame();
-    }
-});
+            public void actionPerformed(ActionEvent e) {
+            for (int i=0;i<=0;i++){
+                x[i]=0;
+                y[i]=0;
+            }    
+            hossz=3;
+            pontok=0;
+            irany = 'R';
+            nevMezo.setText("");
+            running = true;
+            restartButton.setVisible(false);
+            nevMezo.setVisible(false);
+            startGame();
+            }   
+        });
 
         nevMezo = new JTextField(10);
         nevMezo.setFont(new Font("Arial", Font.PLAIN, 20));
         nevMezo.setHorizontalAlignment(JTextField.CENTER);
         nevMezo.addActionListener(new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
-        String playerName = nevMezo.getText();
-        System.out.println("Player name: " + playerName);
+            public void actionPerformed(ActionEvent e) {
+                String playerName = nevMezo.getText();
+                System.out.println("Player name: " + playerName);
+                nevMezo.setVisible(false);
+                // Adatbázis kapcsolat létrehozása
+                try {
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
+                    Statement stmt = conn.createStatement();
+
+                    // SQL utasítás előkészítése
+                    String sql = "INSERT INTO users (Username, Score) VALUES ('" + playerName + "', " + pontok + ") ON DUPLICATE KEY UPDATE Score = VALUES(Score);";
+                    // SQL utasítás végrehajtásaStatement stmt = conn.createStatement();
+                    stmt.execute(sql);
+                     // Kapcsolat bezárása
+                    stmt.close();
+                    conn.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        });
+        add(nevMezo);
         nevMezo.setVisible(false);
-
-        // Adatbázis kapcsolat létrehozása
-       try {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
-            Statement stmt = conn.createStatement();
-
-            // SQL utasítás előkészítése
-           String sql = "INSERT INTO users (Username, Score) VALUES ('" + playerName + "', " + pontok + ") ON DUPLICATE KEY UPDATE Score = VALUES(Score);";
-
-
-            // SQL utasítás végrehajtásaStatement stmt = conn.createStatement();
-            stmt.execute(sql);
-
-            // Kapcsolat bezárása
-            stmt.close();
-            conn.close();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-});
-add(nevMezo);
-nevMezo.setVisible(false);
 
     }
 
@@ -148,24 +141,23 @@ nevMezo.setVisible(false);
     
     //game over kepernyo
     public void gameOver(Graphics g){
-    //game over szoveg kirajzolasa
-    g.setColor(Color.red);
-    g.setFont(new Font("Arial", Font.BOLD, 40));
-    FontMetrics metrics1 = getFontMetrics(g.getFont());
-    g.drawString("Vége a játéknak!", (WIDTH - metrics1.stringWidth("Vége a játéknak!")) / 2, (HEIGHT-200) / 2);
-    //vegso pontszam kirajzolasa
-    g.setColor(Color.red);
-    g.setFont(new Font("Arial", Font.BOLD, 25));
-    FontMetrics metrics = getFontMetrics(g.getFont());
-    g.drawString("Score: " + pontok, (WIDTH - metrics.stringWidth("Score: " + pontok)) / 2, g.getFont().getSize());
-    add(restartButton);
-    restartButton.setBounds((WIDTH - 100) / 2, (HEIGHT+50) / 2, 100, 40);
-    restartButton.setVisible(true);
-    g.setFont(new Font("Arial", Font.BOLD, 20));
-    FontMetrics metrics3 = getFontMetrics(g.getFont());
-    g.drawString("Írd be a nevedet:", (WIDTH - metrics3.stringWidth("Írd be a nevedet:")) / 2, (HEIGHT-200) / 2 + 50);
-    nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
-    
+        //game over szoveg kirajzolasa
+        g.setColor(Color.red);
+        g.setFont(new Font("Arial", Font.BOLD, 40));
+        FontMetrics metrics1 = getFontMetrics(g.getFont());
+        g.drawString("Vége a játéknak!", (WIDTH - metrics1.stringWidth("Vége a játéknak!")) / 2, (HEIGHT-200) / 2);
+        //vegso pontszam kirajzolasa
+        g.setColor(Color.red);
+        g.setFont(new Font("Arial", Font.BOLD, 25));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Score: " + pontok, (WIDTH - metrics.stringWidth("Score: " + pontok)) / 2, g.getFont().getSize());
+        add(restartButton);
+        restartButton.setBounds((WIDTH - 100) / 2, (HEIGHT+50) / 2, 100, 40);
+        restartButton.setVisible(true);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+        g.drawString("Írd be a nevedet:", (WIDTH - metrics3.stringWidth("Írd be a nevedet:")) / 2, (HEIGHT-200) / 2 + 50);
+        nevMezo.setBounds((WIDTH - 200) / 2, (HEIGHT-200) / 2 + 80, 200, 30);
     //try {
        //Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/snakegame", "root", "");
        //Statement stmt = conn.createStatement();
@@ -182,18 +174,15 @@ nevMezo.setVisible(false);
     //}catch (Exception ex) {
         //System.out.println(ex.getMessage());
     //}
-
-    
-    
    SwingUtilities.invokeLater(() -> {
-    if (UNITHELeaderboard.currentInstance == null) {
-        UNITHELeaderboard leaderboard = new UNITHELeaderboard();
-        leaderboard.setVisible(true);
-        UNITHELeaderboard.currentInstance = leaderboard;
-    }
-});
+            if (UNITHELeaderboard.currentInstance == null) {
+                UNITHELeaderboard leaderboard = new UNITHELeaderboard();
+                leaderboard.setVisible(true);
+                UNITHELeaderboard.currentInstance = leaderboard;
+            }
+        });
 
-}
+    }
     
     //a kepernyo valtasi vezerlo
     public void paintComponent(Graphics g) {
